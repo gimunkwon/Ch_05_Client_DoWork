@@ -2,5 +2,8 @@
 
 AMyGameMode::AMyGameMode()
 {
-	DefaultPawnClass = GamePawnClass;
+	if (GamePawnClass)
+	{
+		DefaultPawnClass = GamePawnClass;
+	}
 }

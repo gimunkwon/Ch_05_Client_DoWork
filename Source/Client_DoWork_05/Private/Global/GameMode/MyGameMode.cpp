@@ -1,0 +1,6 @@
+#include "Client_DoWork_05/Public/Global/GameMode/MyGameMode.h"
+
+AMyGameMode::AMyGameMode()
+{
+	DefaultPawnClass = GamePawnClass;
+}

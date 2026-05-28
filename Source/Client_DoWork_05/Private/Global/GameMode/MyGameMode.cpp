@@ -6,4 +6,8 @@ AMyGameMode::AMyGameMode()
 	{
 		DefaultPawnClass = GamePawnClass;
 	}
+	if (GamePlayerControllerClass)
+	{
+		PlayerControllerClass = GamePlayerControllerClass;
+	}
 }

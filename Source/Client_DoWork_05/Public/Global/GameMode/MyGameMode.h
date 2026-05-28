@@ -13,4 +13,6 @@ public:
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="PawnClass")
 	TSubclassOf<APawn> GamePawnClass;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="ControllerClass")
+	TSubclassOf<APlayerController> GamePlayerControllerClass;
 };

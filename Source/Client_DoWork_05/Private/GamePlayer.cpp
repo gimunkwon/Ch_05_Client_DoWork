@@ -1,18 +1,28 @@
 #include "Client_DoWork_05/Public/GamePlayer.h"
 
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 
 AGamePlayer::AGamePlayer()
 {
-	
 	PrimaryActorTick.bCanEverTick = true;
+	
+#pragma region CameraSetting
+	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
+	SpringArmComp->SetupAttachment(RootComponent);
+	SpringArmComp->TargetArmLength = 600.f;
+	SpringArmComp->SetRelativeRotation(FRotator(-60.f,0.f,0.f));
+	
+	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
+	CameraComp->SetupAttachment(SpringArmComp);
+#pragma endregion
 }
 
 
 void AGamePlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 

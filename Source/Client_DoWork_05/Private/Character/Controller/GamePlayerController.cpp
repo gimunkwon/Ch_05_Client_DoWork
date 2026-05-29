@@ -15,6 +15,7 @@ void AGamePlayerController::BeginPlay()
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* EnhancedSubSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
+			UE_LOG(LogTemp,Warning,TEXT("IMC Mapping Completed"));
 			EnhancedSubSystem->AddMappingContext(IMC_Default,0);
 		}
 	}

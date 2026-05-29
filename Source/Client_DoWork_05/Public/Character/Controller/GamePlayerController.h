@@ -17,7 +17,6 @@ public:
 	
 	virtual void BeginPlay() override;
 	
-protected:
 #pragma region InputActions
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="InputAction")
 	TObjectPtr<UInputMappingContext> IMC_Default;

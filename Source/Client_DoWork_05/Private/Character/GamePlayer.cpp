@@ -2,6 +2,8 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "EnhancedInputComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 
 
 AGamePlayer::AGamePlayer()
@@ -23,6 +25,12 @@ AGamePlayer::AGamePlayer()
 void AGamePlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	if (AGamePlayerController* PC = Cast<AGamePlayerController>(GetController()))
+	{
+		// UE_LOG(LogTemp,Warning,TEXT("Controller Was Caching"));
+		OwnerController = PC;
+	}
 }
 
 
@@ -35,5 +43,25 @@ void AGamePlayer::Tick(float DeltaTime)
 void AGamePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	if (AGamePlayerController* PC = Cast<AGamePlayerController>(GetController()))
+	{
+		if (UEnhancedInputComponent* EInputComp = Cast<UEnhancedInputComponent>(InputComponent))
+		{
+			// UE_LOG(LogTemp,Warning,TEXT("PlayerMove Binding"));
+			EInputComp->BindAction(PC->IA_Move, ETriggerEvent::Triggered, this, &AGamePlayer::Player_Move);
+		}
+	}
 }
 
+void AGamePlayer::Player_Move()
+{
+	// UE_LOG(LogTemp,Warning,TEXT("Player MoveStart"));
+	if (!OwnerController) return;
+
+	FHitResult HitResult;
+	if (OwnerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult))
+	{
+		UAIBlueprintHelperLibrary::SimpleMoveToLocation(OwnerController, HitResult.Location);
+	}
+}

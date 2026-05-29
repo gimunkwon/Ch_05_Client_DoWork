@@ -4,6 +4,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 AGamePlayer::AGamePlayer()
@@ -15,10 +16,19 @@ AGamePlayer::AGamePlayer()
 	SpringArmComp->SetupAttachment(RootComponent);
 	SpringArmComp->TargetArmLength = 600.f;
 	SpringArmComp->SetRelativeRotation(FRotator(-60.f,0.f,0.f));
+	SpringArmComp->bUsePawnControlRotation = false;
+	SpringArmComp->bInheritPitch = false;
+	SpringArmComp->bInheritRoll = false;
+	SpringArmComp->bInheritYaw = false;
+	SpringArmComp->bDoCollisionTest = false;
 	
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComp->SetupAttachment(SpringArmComp);
+	CameraComp->bUsePawnControlRotation = false;
 #pragma endregion
+#pragma region CharacterMovement
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+#pragma endregion 
 }
 
 

@@ -4,6 +4,7 @@
 #include "GameFramework/PlayerController.h"
 #include "GamePlayerController.generated.h"
 
+class UWidget_PlayerHUD;
 class UInputMappingContext;
 class UInputAction;
 
@@ -22,6 +23,13 @@ public:
 	TObjectPtr<UInputMappingContext> IMC_Default;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="InputAction")
 	TObjectPtr<UInputAction> IA_Move;
+#pragma endregion
+	
+#pragma region UI
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="UI")
+	TSubclassOf<UUserWidget> Widget_PlayerHUDClass;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="UI")
+	TObjectPtr<UWidget_PlayerHUD> widget_PlayerHUDInst;
 #pragma endregion 
 	
 };

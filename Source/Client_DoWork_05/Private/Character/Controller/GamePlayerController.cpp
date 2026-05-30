@@ -1,5 +1,7 @@
 #include "Character/Controller/GamePlayerController.h"
 #include "EnhancedInputSubsystems.h"
+#include "Blueprint/UserWidget.h"
+#include "UI/Widget_PlayerHUD.h"
 
 AGamePlayerController::AGamePlayerController()
 {
@@ -17,6 +19,15 @@ void AGamePlayerController::BeginPlay()
 		{
 			UE_LOG(LogTemp,Warning,TEXT("IMC Mapping Completed"));
 			EnhancedSubSystem->AddMappingContext(IMC_Default,0);
+		}
+	}
+	
+	if (Widget_PlayerHUDClass)
+	{
+		widget_PlayerHUDInst = CreateWidget<UWidget_PlayerHUD>(this, Widget_PlayerHUDClass);
+		if (widget_PlayerHUDInst)
+		{
+			widget_PlayerHUDInst->AddToViewport();
 		}
 	}
 }

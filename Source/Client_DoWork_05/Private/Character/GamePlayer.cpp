@@ -5,6 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "UI/Widget_PlayerHUD.h"
 
 
 AGamePlayer::AGamePlayer()
@@ -51,6 +52,10 @@ void AGamePlayer::BeginPlay()
 	if (OwnerController)
 	{
 		OwnerController->InitializeHUD(MaxHP,CurrentHP);
+		if (OwnerController->widget_PlayerHUDInst)
+		{
+			OnHPChanged.AddDynamic(OwnerController->widget_PlayerHUDInst, &UWidget_PlayerHUD::SetHPProgressBar);
+		}
 	}
 }
 
@@ -85,4 +90,19 @@ void AGamePlayer::Player_Move()
 	{
 		UAIBlueprintHelperLibrary::SimpleMoveToLocation(OwnerController, HitResult.Location);
 	}
+}
+
+float AGamePlayer::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	class AController* EventInstigator, AActor* DamageCauser)
+{
+	float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	CurrentHP = FMath::Clamp(CurrentHP - ActualDamage, 0.f, MaxHP);
+
+	if (OnHPChanged.IsBound())
+	{
+		OnHPChanged.Broadcast(MaxHP,CurrentHP);
+	}
+	
+	return ActualDamage;
 }

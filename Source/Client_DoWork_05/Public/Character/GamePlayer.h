@@ -8,6 +8,8 @@
 class UCameraComponent;
 class USpringArmComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHPChanged, float,MaxHP,float,CurrentHP);
+
 UCLASS()
 class CLIENT_DOWORK_05_API AGamePlayer : public ACharacter
 {
@@ -20,6 +22,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
 	
+#pragma region DelegateFunctor
+	UPROPERTY()
+	FOnHPChanged OnHPChanged;
+#pragma endregion 
+	
 protected:
 #pragma region CameraSettings
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Camera")
@@ -28,11 +35,17 @@ protected:
 	TObjectPtr<UCameraComponent> CameraComp;
 #pragma endregion
 	
+#pragma region Controller
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="PlayerController")
 	TObjectPtr<AGamePlayerController> OwnerController;
+#pragma endregion 
 	
 #pragma region BindActionFunc
 	void Player_Move();
+#pragma endregion 
+	
+#pragma region Damamge
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 #pragma endregion 
 	
 #pragma region CharacterStat

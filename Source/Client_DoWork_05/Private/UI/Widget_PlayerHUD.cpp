@@ -7,6 +7,6 @@ void UWidget_PlayerHUD::SetHPProgressBar(float MaxHP, float CurrentHP)
 {
 	if (PB_PlayerHP)
 	{
-		PB_PlayerHP->SetPercent(MaxHP / CurrentHP);
+		PB_PlayerHP->SetPercent(CurrentHP / MaxHP);
 	}
 }

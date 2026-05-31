@@ -26,9 +26,16 @@ AGamePlayer::AGamePlayer()
 	CameraComp->SetupAttachment(SpringArmComp);
 	CameraComp->bUsePawnControlRotation = false;
 #pragma endregion
+	
 #pragma region CharacterMovement
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+#pragma endregion
+	
+#pragma region StatSettings
+	MaxHP = 100.f;
+	CurrentHP = MaxHP;
 #pragma endregion 
+	
 }
 
 
@@ -40,6 +47,10 @@ void AGamePlayer::BeginPlay()
 	{
 		// UE_LOG(LogTemp,Warning,TEXT("Controller Was Caching"));
 		OwnerController = PC;
+	}
+	if (OwnerController)
+	{
+		OwnerController->InitializeHUD(MaxHP,CurrentHP);
 	}
 }
 

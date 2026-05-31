@@ -30,6 +30,9 @@ public:
 	TSubclassOf<UUserWidget> Widget_PlayerHUDClass;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="UI")
 	TObjectPtr<UWidget_PlayerHUD> widget_PlayerHUDInst;
+	
+	void InitializeHUD(float MaxHP, float CurrentHP);
+	
 #pragma endregion 
 	
 };

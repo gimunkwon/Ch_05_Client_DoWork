@@ -21,13 +21,17 @@ void AGamePlayerController::BeginPlay()
 			EnhancedSubSystem->AddMappingContext(IMC_Default,0);
 		}
 	}
-	
+}
+
+void AGamePlayerController::InitializeHUD(float MaxHP, float CurrentHP)
+{
 	if (Widget_PlayerHUDClass)
 	{
 		widget_PlayerHUDInst = CreateWidget<UWidget_PlayerHUD>(this, Widget_PlayerHUDClass);
 		if (widget_PlayerHUDInst)
 		{
 			widget_PlayerHUDInst->AddToViewport();
+			widget_PlayerHUDInst->SetHPProgressBar(MaxHP,CurrentHP);
 		}
 	}
 }

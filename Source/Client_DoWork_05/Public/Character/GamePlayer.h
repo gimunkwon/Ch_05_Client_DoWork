@@ -27,9 +27,19 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Camera")
 	TObjectPtr<UCameraComponent> CameraComp;
 #pragma endregion
+	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="PlayerController")
 	TObjectPtr<AGamePlayerController> OwnerController;
+	
 #pragma region BindActionFunc
 	void Player_Move();
 #pragma endregion 
+	
+#pragma region CharacterStat
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Stat")
+	float MaxHP;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Stat")
+	float CurrentHP;
+#pragma endregion 
+	
 };
